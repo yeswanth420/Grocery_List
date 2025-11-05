@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grocery List ??</title>
   <style>
     :root {
@@ -79,13 +77,13 @@
   <div class="wrap">
     <header>
       <h1> Grocery List</h1>
-      <div class="stats muted" id="stats">0 items • 0 needed</div>
+      <div class="stats muted" id="stats">24 items • 24 needed</div>
     </header>
 
     <section class="panel controls">
       <form id="addForm" class="grid" autocomplete="off">
-        <input id="name" type="text" placeholder="Item (e.g., Rice, Eggs, Milk)" required />
-        <input id="qty" type="number" min="1" step="1" value="1" title="Quantity" />
+        <input id="name" type="text" placeholder="Item (e.g., Rice, Eggs, Milk)" required="">
+        <input id="qty" type="number" min="1" step="1" value="1" title="Quantity">
         <select id="unit" class="unit" title="Unit">
           <option value="kg">kg</option>
           <option value="pcs">pcs</option>
@@ -104,20 +102,596 @@
           <button class="btn-outline btn-small filter-btn" data-filter="needed">Needed</button>
           <button class="btn-outline btn-small filter-btn" data-filter="purchased">Purchased</button>
         </div>
-        <input id="search" class="search" type="text" placeholder="Search items..." />
+        <input id="search" class="search" type="text" placeholder="Search items...">
         <div class="row">
           <button id="clearPurchased" class="btn-outline btn-small">Clear purchased</button>
           <button id="clearAll" class="btn-danger btn-small">Clear all</button>
           <button id="exportBtn" class="btn-outline btn-small">Export</button>
           <label class="btn-outline btn-small" style="cursor:pointer;">
-            Import <input id="importFile" type="file" accept="application/json" hidden>
+            Import <input id="importFile" type="file" accept="application/json" hidden="">
           </label>
           <button id="printBtn" class="btn-outline btn-small">Print</button>
         </div>
       </div>
     </section>
 
-    <section class="panel list" id="list"></section>
+    <section class="panel list" id="list">
+            <div class="item " data-id="MHLLFHBCPBVMXO">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Dabur Red paste</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="1" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack" selected="">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLA5Q0VVC2I4">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">GroundNut</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="2" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL62DDFBHAXX">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Kadugu</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="100" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL47E15AY8Q6">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Karam masala</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="100" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLAXDKBVSSWW">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Katala Parupu</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="500" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL9NOWV9JZM3">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">lifebuoy soap</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="2" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs" selected="">pcs</option><option value="kg">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL77JLXL9EBS">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Malli Powder</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="100" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL1M3LAIYB79">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Manjal</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="100" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL6QQX37OG3Q">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Milagu Powder</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="100" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLE2BLCCNS1F">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Mukala Brown</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="500" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLF4BCPF41MZ">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Mysore sandal Soap</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="1" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack" selected="">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLCBMGMVXD44">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Pachha Pairr</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="500" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLBIBKV2HKRX">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Pasi Parupu</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="500" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL7SRL7VX760">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Perungayam</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="100" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLAJFKCGJIBP">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Rava</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="2" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLCLG9MLU7DV">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Salt Both</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="1" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs" selected="">pcs</option><option value="kg">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL2EGHXQFW7R">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Siragam</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="100" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL3OK916ZE5W">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Sombu</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="50" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL8EHDOI9CBG">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Surf Excel Quick Wash Powder</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="500" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL8NSX58W0UF">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Surf Excel Soap</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="3" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs" selected="">pcs</option><option value="kg">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLB9Z4PTHWTI">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Thuvaram Parupu</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="1" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL59KXEX88JE">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Venthayam</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="50" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg">kg</option><option value="g" selected="">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLLECX532JJRE">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">White Pattani</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="500" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs">pcs</option><option value="kg" selected="">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          
+            <div class="item " data-id="MHLL8YR473OLHF">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle"></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">Wim Wash Soap</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="3" title="Quantity">
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      <option value="pcs" selected="">pcs</option><option value="kg">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option><option value="pack">pack</option><option value="">(no unit)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          </section>
 
     <footer class="muted">
       Tip: Click an item name to edit. Use +/- to change quantity.
@@ -399,5 +973,6 @@
     render();
     els.name.focus();
   </script>
-</body>
-</html>
+
+
+</body></html>

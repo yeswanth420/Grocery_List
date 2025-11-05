@@ -923,51 +923,33 @@
     });
 
     // Export / Import / Print
-    els.exportBtn.addEventListener('click', async () => {
-      const data = JSON.stringify(items, null, 2);
-      try {
-        await navigator.clipboard.writeText(data);
-        showToast('Exported to clipboard');
-      } catch {
-        const blob = new Blob([data], { type: 'application/json' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'grocery-list.json';
-        a.click();
-        URL.revokeObjectURL(a.href);
-        showToast('Downloaded grocery-list.json');
-      }
-    });
+    // Export as Excel-friendly CSV
+els.exportBtn.addEventListener('click', () => {
+  const headers = ['Name', 'Quantity', 'Unit', 'Purchased'];
+  const rows = items.map(i => [i.name, i.qty, i.unit, i.purchased ? 'Yes' : 'No']);
 
-    els.importFile.addEventListener('change', e => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const json = JSON.parse(reader.result);
-          if (!Array.isArray(json)) throw new Error('Invalid format');
-          // Basic validation (ignore any price fields if present)
-          items = json.map(i => ({
-            id: i.id || uid(),
-            name: String(i.name || '').trim(),
-            qty: Math.max(1, Math.floor(Number(i.qty) || 1)),
-            unit: String(i.unit || ''),
-            purchased: Boolean(i.purchased)
-          })).filter(i => i.name);
-          save(); render();
-          showToast('Imported list');
-        } catch (err) {
-          alert('Import failed: ' + err.message);
-        } finally {
-          e.target.value = '';
-        }
-      };
-      reader.readAsText(file);
-    });
+  // Build CSV with safe escaping
+  const csv = [headers, ...rows]
+    .map(row =>
+      row.map(cell => {
+        let v = cell == null ? '' : String(cell);
+        v = v.replace(/"/g, '""');           // escape quotes
+        if (/[",\n]/.test(v)) v = `"${v}"`;  // wrap if needed
+        return v;
+      }).join(',')
+    ).join('\r\n');
 
-    els.printBtn.addEventListener('click', () => window.print());
-
+  // UTF‑8 BOM so Excel opens it correctly
+  const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'grocery-list.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(a.href);
+  showToast('Downloaded grocery-list.csv');
+});
     // Init
     load();
     render();

@@ -933,7 +933,7 @@
     });
 
     // Export / Import / Print
-    // Export as Excel-friendly CSV
+    // Export as Excel‑friendly CSV
 els.exportBtn.addEventListener('click', () => {
   const headers = ['Name', 'Quantity', 'Unit', 'Purchased'];
   const rows = items.map(i => [i.name, i.qty, i.unit, i.purchased ? 'Yes' : 'No']);
@@ -960,6 +960,134 @@ els.exportBtn.addEventListener('click', () => {
   URL.revokeObjectURL(a.href);
   showToast('Downloaded grocery-list.csv');
 });
+
+// -------- CSV + JSON Import helpers --------
+function detectDelimiter(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+  const line = lines[0] || '';
+  let comma = 0, semi = 0, tab = 0, inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') inQuotes = !inQuotes;
+    else if (!inQuotes) {
+      if (c === ',') comma++;
+      else if (c === ';') semi++;
+      else if (c === '\t') tab++;
+    }
+  }
+  if (tab >= semi && tab >= comma) return '\t';
+  if (semi >= comma) return ';';
+  return ',';
+}
+
+function parseCSV(text) {
+  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1); // strip BOM
+  const delim = detectDelimiter(text);
+  const rows = [];
+  let row = [];
+  let cur = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { cur += '"'; i++; } // escaped quote
+        else { inQuotes = false; }
+      } else {
+        cur += c;
+      }
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === delim) { row.push(cur); cur = ''; }
+      else if (c === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+      else if (c === '\r') {
+        if (text[i + 1] === '\n') i++;
+        row.push(cur); rows.push(row); row = []; cur = '';
+      } else {
+        cur += c;
+      }
+    }
+  }
+  if (cur.length > 0 || row.length > 0) { row.push(cur); rows.push(row); }
+  return rows.filter(r => !(r.length === 1 && r[0].trim() === ''));
+}
+
+function normalizeItem(i) {
+  return {
+    id: i.id || uid(),
+    name: String(i.name || '').trim(),
+    qty: Math.max(1, Math.floor(Number(i.qty) || 1)),
+    unit: String(i.unit || ''),
+    purchased: Boolean(i.purchased),
+  };
+}
+
+function toBool(v) {
+  const s = String(v || '').trim().toLowerCase();
+  return ['yes','true','1','y','purchased','done','bought'].includes(s);
+}
+
+// Import: accepts JSON or CSV
+els.importFile.addEventListener('change', e => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      let text = String(reader.result || '');
+      if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1); // strip BOM
+
+      // JSON?
+      if (/^\s*[\[{]/.test(text)) {
+        const json = JSON.parse(text);
+        if (!Array.isArray(json)) throw new Error('Invalid JSON (expected an array)');
+        items = json.map(normalizeItem).filter(i => i.name);
+        save(); render();
+        showToast('Imported JSON');
+        return;
+      }
+
+      // CSV
+      const rows = parseCSV(text);
+      if (!rows.length) throw new Error('Empty CSV');
+
+      const header = rows[0].map(h => h.trim().toLowerCase());
+      const looksLikeHeader = header.some(h => ['name','item','quantity','qty','unit','purchased'].includes(h));
+      let dataRows = rows;
+      let idx = { name: 0, qty: 1, unit: 2, purchased: 3 };
+
+      if (looksLikeHeader) {
+        idx = {
+          name: header.findIndex(h => ['name','item','item name'].includes(h)),
+          qty: header.findIndex(h => ['quantity','qty','count','amount'].includes(h)),
+          unit: header.findIndex(h => ['unit','units'].includes(h)),
+          purchased: header.findIndex(h => ['purchased','done','bought','status'].includes(h)),
+        };
+        dataRows = rows.slice(1);
+      }
+
+      items = dataRows.map(r => ({
+        id: uid(),
+        name: String(r[idx.name] || '').trim(),
+        qty: Math.max(1, Math.floor(Number(r[idx.qty]) || 1)),
+        unit: String(r[idx.unit] || ''),
+        purchased: idx.purchased >= 0 ? toBool(r[idx.purchased]) : false,
+      })).filter(i => i.name);
+
+      save(); render();
+      showToast('Imported CSV');
+    } catch (err) {
+      alert('Import failed: ' + err.message);
+    } finally {
+      e.target.value = '';
+    }
+  };
+  reader.readAsText(file);
+});
+
+// Print stays the same
+els.printBtn.addEventListener('click', () => window.print());
     // Init
     load();
     render();

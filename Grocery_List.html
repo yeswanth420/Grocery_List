@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grocery List ??</title>
+  <style>
+    :root {
+      --bg: #0f172a;        /* slate-900 */
+      --panel: #111827;     /* gray-900 */
+      --muted: #94a3b8;     /* slate-400 */
+      --text: #e5e7eb;      /* gray-200 */
+      --accent: #22c55e;    /* green-500 */
+      --accent-2: #0ea5e9;  /* sky-500 */
+      --danger: #ef4444;    /* red-500 */
+      --border: #1f2937;    /* gray-800 */
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 16px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0 16px; }
+    h1 { font-size: 1.5rem; margin: 0; display: flex; align-items: center; gap: 8px; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px var(--shadow); }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .controls { padding: 12px; display: grid; gap: 10px; }
+    .grid { display: grid; gap: 10px; grid-template-columns: 1.2fr 0.6fr 0.8fr auto; }
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: 1fr 0.6fr; }
+      .unit { grid-column: 1 / 2; }
+    }
+    input, select, button { font: inherit; }
+    input[type="text"], input[type="number"], select {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px;
+      background: #0b1220; color: var(--text); outline: none;
+    }
+    input::placeholder { color: var(--muted); }
+    button {
+      padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
+      background: #101828; color: var(--text); cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); border-color: transparent; color: #06220f; font-weight: 600; }
+    .btn-outline { background: transparent; }
+    .btn-danger { background: var(--danger); border-color: transparent; color: #2a0b0b; font-weight: 600; }
+    .btn-small { padding: 6px 10px; border-radius: 8px; }
+    .muted { color: var(--muted); }
+    .stats { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filters .active { outline: 2px solid var(--accent-2); }
+    .list { margin-top: 12px; }
+    .item { display: grid; align-items: center; gap: 10px; padding: 10px 12px; border-top: 1px solid var(--border); }
+    .item:first-child { border-top: 0; }
+    .item-grid {
+      display: grid; gap: 8px;
+      grid-template-columns: 28px 1.1fr minmax(170px, 240px) auto;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .item-grid { grid-template-columns: 28px 1fr 1fr; grid-auto-rows: auto; }
+      .cell-actions { grid-column: 2 / -1; }
+    }
+    .item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); }
+    .name { padding: 8px 10px; border-radius: 8px; border: 1px dashed transparent; }
+    .name[contenteditable="true"]:focus { outline: none; border-color: var(--accent-2); background: #0b1220; }
+    .qtybox { display: inline-flex; align-items: center; gap: 6px; }
+    .qtybox input { width: 72px; text-align: center; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; }
+    .unit { min-width: 88px; }
+    .purchased .name { text-decoration: line-through; opacity: 0.65; }
+    .toolbar { padding: 12px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+    .search { flex: 1; min-width: 220px; }
+    .toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); background: #0b1220; color: var(--text); border: 1px solid var(--border); padding: 10px 14px; border-radius: 10px; box-shadow: 0 6px 20px var(--shadow); opacity: 0; pointer-events: none; transition: opacity .25s; }
+    .toast.show { opacity: 1; }
+    .empty { padding: 16px; text-align: center; color: var(--muted); }
+    footer { padding: 14px; color: var(--muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1> Grocery List</h1>
+      <div class="stats muted" id="stats">0 items • 0 needed</div>
+    </header>
+
+    <section class="panel controls">
+      <form id="addForm" class="grid" autocomplete="off">
+        <input id="name" type="text" placeholder="Item (e.g., Rice, Eggs, Milk)" required />
+        <input id="qty" type="number" min="1" step="1" value="1" title="Quantity" />
+        <select id="unit" class="unit" title="Unit">
+          <option value="kg">kg</option>
+          <option value="pcs">pcs</option>
+          <option value="g">g</option>
+          <option value="L">L</option>
+          <option value="mL">mL</option>
+          <option value="pack">pack</option>
+          <option value="">(no unit)</option>
+        </select>
+        <button class="btn-primary" type="submit">Add item ?</button>
+      </form>
+
+      <div class="toolbar">
+        <div class="filters">
+          <button class="btn-outline btn-small filter-btn active" data-filter="all">All</button>
+          <button class="btn-outline btn-small filter-btn" data-filter="needed">Needed</button>
+          <button class="btn-outline btn-small filter-btn" data-filter="purchased">Purchased</button>
+        </div>
+        <input id="search" class="search" type="text" placeholder="Search items..." />
+        <div class="row">
+          <button id="clearPurchased" class="btn-outline btn-small">Clear purchased</button>
+          <button id="clearAll" class="btn-danger btn-small">Clear all</button>
+          <button id="exportBtn" class="btn-outline btn-small">Export</button>
+          <label class="btn-outline btn-small" style="cursor:pointer;">
+            Import <input id="importFile" type="file" accept="application/json" hidden>
+          </label>
+          <button id="printBtn" class="btn-outline btn-small">Print</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel list" id="list"></section>
+
+    <footer class="muted">
+      Tip: Click an item name to edit. Use +/- to change quantity.
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">Copied!</div>
+
+  <script>
+    // Simple Grocery List App — vanilla JS (no prices)
+    const STORAGE_KEY = 'groceryList_v1';
+
+    const els = {
+      list: document.getElementById('list'),
+      stats: document.getElementById('stats'),
+      addForm: document.getElementById('addForm'),
+      name: document.getElementById('name'),
+      qty: document.getElementById('qty'),
+      unit: document.getElementById('unit'),
+      search: document.getElementById('search'),
+      filterBtns: document.querySelectorAll('.filter-btn'),
+      clearPurchased: document.getElementById('clearPurchased'),
+      clearAll: document.getElementById('clearAll'),
+      exportBtn: document.getElementById('exportBtn'),
+      importFile: document.getElementById('importFile'),
+      printBtn: document.getElementById('printBtn'),
+      toast: document.getElementById('toast'),
+    };
+
+    let items = [];
+    let filter = 'all';     // 'all' | 'needed' | 'purchased'
+    let searchTerm = '';
+
+    function uid() {
+      return (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)).toUpperCase();
+    }
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+    }
+    function load() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        items = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(items)) items = [];
+      } catch { items = []; }
+    }
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    }
+    function showToast(msg = 'Done') {
+      els.toast.textContent = msg;
+      els.toast.classList.add('show');
+      setTimeout(() => els.toast.classList.remove('show'), 1400);
+    }
+
+    function addItem({ name, qty, unit }) {
+      name = name.trim();
+      if (!name) return;
+      qty = Math.max(1, Math.floor(Number(qty) || 1));
+      items.push({ id: uid(), name, qty, unit: unit || '', purchased: false });
+      save(); render();
+    }
+
+    function updateItem(id, patch) {
+      const it = items.find(i => i.id === id);
+      if (!it) return;
+      Object.assign(it, patch);
+      save(); render();
+    }
+
+    function deleteItem(id) {
+      items = items.filter(i => i.id !== id);
+      save(); render();
+    }
+
+    function filteredItems() {
+      let arr = items.slice();
+      if (filter === 'needed') arr = arr.filter(i => !i.purchased);
+      else if (filter === 'purchased') arr = arr.filter(i => i.purchased);
+      if (searchTerm) {
+        const t = searchTerm.toLowerCase();
+        arr = arr.filter(i => i.name.toLowerCase().includes(t));
+      }
+      // Sort: needed first, then name
+      arr.sort((a, b) => (a.purchased === b.purchased ? a.name.localeCompare(b.name) : a.purchased - b.purchased));
+      return arr;
+    }
+
+    function render() {
+      const arr = filteredItems();
+      if (!arr.length) {
+        els.list.innerHTML = '<div class="empty">No items yet. Add something above.</div>';
+      } else {
+        els.list.innerHTML = arr.map(item => {
+          const cls = 'item ' + (item.purchased ? 'purchased' : '');
+          return `
+            <div class="${cls}" data-id="${item.id}">
+              <div class="item-grid">
+                <div class="cell-check"><input type="checkbox" class="toggle" ${item.purchased ? 'checked' : ''} /></div>
+                <div class="cell-name">
+                  <div class="name" contenteditable="true" data-role="name">${escapeHtml(item.name)}</div>
+                </div>
+                <div class="cell-qty">
+                  <div class="pill">
+                    <div class="qtybox">
+                      <button class="btn-small dec" title="Decrease">-</button>
+                      <input class="qty-input" type="number" min="1" step="1" value="${item.qty}" title="Quantity" />
+                      <button class="btn-small inc" title="Increase">+</button>
+                    </div>
+                    <select class="unit-select unit" title="Unit">
+                      ${['pcs','kg','g','L','mL','pack',''].map(u => `<option value="${u}" ${u===item.unit?'selected':''}>${u||'(no unit)'}</option>`).join('')}
+                    </select>
+                  </div>
+                </div>
+                <div class="cell-actions">
+                  <button class="btn-outline btn-small del">??? Delete</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Stats: total items, needed count
+      const totalItems = items.length;
+      const needed = items.filter(i => !i.purchased).length;
+      els.stats.textContent = `${totalItems} item${totalItems!==1?'s':''} • ${needed} needed`;
+    }
+
+    // Event bindings
+    els.addForm.addEventListener('submit', e => {
+      e.preventDefault();
+      addItem({
+        name: els.name.value,
+        qty: els.qty.value,
+        unit: els.unit.value
+      });
+      els.name.value = '';
+      els.qty.value = '1';
+      els.unit.value = 'pcs';
+      els.name.focus();
+    });
+
+    els.list.addEventListener('click', e => {
+      const row = e.target.closest('.item');
+      if (!row) return;
+      const id = row.dataset.id;
+
+      if (e.target.classList.contains('inc')) {
+        const it = items.find(i => i.id === id); if (!it) return;
+        updateItem(id, { qty: it.qty + 1 });
+      } else if (e.target.classList.contains('dec')) {
+        const it = items.find(i => i.id === id); if (!it) return;
+        updateItem(id, { qty: Math.max(1, it.qty - 1) });
+      } else if (e.target.classList.contains('del')) {
+        if (confirm('Delete this item?')) deleteItem(id);
+      }
+    });
+
+    els.list.addEventListener('change', e => {
+      const row = e.target.closest('.item');
+      if (!row) return;
+      const id = row.dataset.id;
+
+      if (e.target.classList.contains('qty-input')) {
+        const val = Math.max(1, Math.floor(Number(e.target.value) || 1));
+        updateItem(id, { qty: val });
+      } else if (e.target.classList.contains('unit-select')) {
+        updateItem(id, { unit: e.target.value });
+      } else if (e.target.classList.contains('toggle')) {
+        updateItem(id, { purchased: e.target.checked });
+      }
+    });
+
+    // Inline edit name (contenteditable)
+    els.list.addEventListener('keydown', e => {
+      const target = e.target;
+      if (target?.dataset.role === 'name' && e.key === 'Enter') {
+        e.preventDefault();
+        target.blur();
+      }
+    });
+    els.list.addEventListener('blur', e => {
+      const target = e.target;
+      if (target?.dataset.role === 'name') {
+        const row = target.closest('.item'); if (!row) return;
+        const id = row.dataset.id;
+        const newName = target.textContent.trim();
+        if (!newName) {
+          const it = items.find(i => i.id === id);
+          target.textContent = it?.name || '';
+          return;
+        }
+        updateItem(id, { name: newName });
+      }
+    }, true);
+
+    // Filters
+    els.filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        els.filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filter = btn.dataset.filter;
+        render();
+      });
+    });
+
+    // Search
+    els.search.addEventListener('input', e => {
+      searchTerm = e.target.value.trim();
+      render();
+    });
+
+    // Bulk actions
+    els.clearPurchased.addEventListener('click', () => {
+      const count = items.filter(i => i.purchased).length;
+      if (!count) { showToast('Nothing to clear'); return; }
+      if (confirm(`Remove ${count} purchased item(s)?`)) {
+        items = items.filter(i => !i.purchased);
+        save(); render();
+      }
+    });
+
+    els.clearAll.addEventListener('click', () => {
+      if (!items.length) return;
+      if (confirm('Clear ALL items?')) {
+        items = []; save(); render();
+      }
+    });
+
+    // Export / Import / Print
+    els.exportBtn.addEventListener('click', async () => {
+      const data = JSON.stringify(items, null, 2);
+      try {
+        await navigator.clipboard.writeText(data);
+        showToast('Exported to clipboard');
+      } catch {
+        const blob = new Blob([data], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'grocery-list.json';
+        a.click();
+        URL.revokeObjectURL(a.href);
+        showToast('Downloaded grocery-list.json');
+      }
+    });
+
+    els.importFile.addEventListener('change', e => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const json = JSON.parse(reader.result);
+          if (!Array.isArray(json)) throw new Error('Invalid format');
+          // Basic validation (ignore any price fields if present)
+          items = json.map(i => ({
+            id: i.id || uid(),
+            name: String(i.name || '').trim(),
+            qty: Math.max(1, Math.floor(Number(i.qty) || 1)),
+            unit: String(i.unit || ''),
+            purchased: Boolean(i.purchased)
+          })).filter(i => i.name);
+          save(); render();
+          showToast('Imported list');
+        } catch (err) {
+          alert('Import failed: ' + err.message);
+        } finally {
+          e.target.value = '';
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    els.printBtn.addEventListener('click', () => window.print());
+
+    // Init
+    load();
+    render();
+    els.name.focus();
+  </script>
+</body>
+</html>
